@@ -1,11 +1,11 @@
 import React, { Fragment } from "react";
-import { getProfileBySearch } from "../../actions/profile";
+import { getProfileBySearch , getProfiles } from "../../actions/profile";
 import { Input } from "antd";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 const { Search } = Input;
 
-const SearchBar = ({ getProfileBySearch, profile}) => {
+const SearchBar = ({ getProfileBySearch, getProfiles , profile}) => {
   return (
     <Fragment>
       <Search
@@ -13,7 +13,8 @@ const SearchBar = ({ getProfileBySearch, profile}) => {
         placeholder="Search by keywords (PHP, .Net, graphic design etc.)"
         enterButton="Search"
         size="default"
-        onSearch={(value) => getProfileBySearch(value)}
+        onSearch={(value) => {
+          value === "" ? getProfiles() : getProfileBySearch(value)}}
       />
     </Fragment>
   );
@@ -21,6 +22,7 @@ const SearchBar = ({ getProfileBySearch, profile}) => {
 
 SearchBar.propTypes = {
   getProfileBySearch: PropTypes.func.isRequired,
+  getProfiles: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
 };
 
@@ -28,4 +30,4 @@ const mapStateToProps = (state) => ({
   profile: state.profile,
 });
 
-export default connect(mapStateToProps, { getProfileBySearch })(SearchBar);
+export default connect(mapStateToProps, { getProfileBySearch , getProfiles })(SearchBar);

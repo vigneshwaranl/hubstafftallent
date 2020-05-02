@@ -1,11 +1,16 @@
-import React, { Fragment } from "react";
+import React, { Fragment,useEffect } from "react";
 import { getProfileByCountry } from "../../actions/profile";
 import { Input } from "antd";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 const { Search } = Input;
 
-const CountrySearch = ({ getProfileByCountry}) => {
+const CountrySearch = ({ getProfileByCountry, clearAll}) => {
+
+  useEffect (() => {
+    console.log(clearAll);
+  },[clearAll])
+
   return (
     <Fragment>
       <Search
@@ -19,10 +24,12 @@ const CountrySearch = ({ getProfileByCountry}) => {
 };
 
 CountrySearch.propTypes = {
-  getProfileByCountry: PropTypes.func.isRequired
+  getProfileByCountry: PropTypes.func.isRequired,
+  clearAll: PropTypes.bool.isRequired
 };
 
-const mapStateToProps = () => ({
+const mapStateToProps = state => ({
+  clearAll : state.clearAll
 });
 
 export default connect(mapStateToProps, { getProfileByCountry })(CountrySearch);

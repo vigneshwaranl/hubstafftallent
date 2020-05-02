@@ -1,10 +1,10 @@
 import React, { Fragment, useEffect } from "react";
-import { getProfileBySearch, getProfiles } from "../../actions/profile";
+import { getSearchAvailablityFilter, getProfiles } from "../../actions/profile";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Checkbox } from "antd";
 
-const AvailablityFilter = ({ getProfiles, getProfileBySearch, clearAll }) => {
+const AvailablityFilter = ({ getProfiles, getSearchAvailablityFilter, clearAll }) => {
   const [fullTime, setFullTime] = React.useState(false);
   const [partTime, setPartTime] = React.useState(false);
 
@@ -17,9 +17,9 @@ const AvailablityFilter = ({ getProfiles, getProfileBySearch, clearAll }) => {
     if ((fullTime && partTime) || (!fullTime && !partTime)) {
       getProfiles();
     } else {
-      getProfileBySearch(fullTime ? "Full Time" : "Part Time");
+      getSearchAvailablityFilter(fullTime ? "Full" : "Part");
     }
-  }, [getProfiles, getProfileBySearch, partTime, fullTime]);
+  }, [getProfiles, getSearchAvailablityFilter, partTime, fullTime]);
 
   return (
     <Fragment>
@@ -46,7 +46,7 @@ const AvailablityFilter = ({ getProfiles, getProfileBySearch, clearAll }) => {
 };
 
 AvailablityFilter.propTypes = {
-  filterAvailablity: PropTypes.func.isRequired,
+  getSearchAvailablityFilter: PropTypes.func.isRequired,
   getProfiles: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
 };
@@ -55,6 +55,6 @@ const mapStateToProps = (state) => ({
   clearAll: state.clearAll,
 });
 
-export default connect(mapStateToProps, { getProfileBySearch, getProfiles })(
+export default connect(mapStateToProps, { getSearchAvailablityFilter, getProfiles })(
   AvailablityFilter
 );
